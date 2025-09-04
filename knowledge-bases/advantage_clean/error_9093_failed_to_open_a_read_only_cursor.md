@@ -1,0 +1,29 @@
+---
+title: Error 9093 Failed To Open A Read Only Cursor
+slug: error_9093_failed_to_open_a_read_only_cursor
+product: Advantage Database Server
+component: Advantage
+version: "12"
+category: Reference
+original_path_html: error_9093_failed_to_open_a_read_only_cursor.htm
+source: Advantage CHM
+tags:
+  - error
+checksum: 686544d51a8c2297e0b99941059849fd25a924fa
+---
+
+# Error 9093 Failed To Open A Read Only Cursor
+
+9093 Failed to open a read-only cursor
+
+9093 Failed to open a read-only cursor
+
+Advantage Error Guide
+
+| 9093 Failed to open a read-only cursor  Advantage Error Guide |  |  |  |  |
+
+In general, 9000 class errors indicate an internal problem within the Advantage server.
+
+On the Windows platform, when Advantage logs a 9000 class error it will also generate a crash dump file. This file will be placed in the error log path (default is c:\), and the filename will be prefixed with "adsdump". Please send this crash dump file, along with all ads\_err error log files to Advantage Technical Support.
+
+For other platforms, please send a small re-creation, along with all ads\_err error log files to Advantage Technical Support.

@@ -1,0 +1,37 @@
+---
+title: Master Integrating Tps Into Advantage Applications
+slug: master_integrating_tps_into_advantage_applications
+product: Advantage Database Server
+component: Advantage
+version: "12"
+category: Reference
+original_path_html: master_integrating_tps_into_advantage_applications.htm
+source: Advantage CHM
+tags:
+  - master
+checksum: a6ca8c18b3488bde8b0af60f1d1da3352eff11c8
+---
+
+# Master Integrating Tps Into Advantage Applications
+
+Integrating TPS into Advantage Applications
+
+Integrating TPS into Advantage Applications
+
+Advantage Concepts
+
+| Integrating TPS into Advantage Applications  Advantage Concepts |  |  |  |  |
+
+Before integrating Advantage TPS into an Advantage application, what warrants a "transaction" within the confines of the application should be defined. If updates and appends involve multiple records in one or more tables, consider handling the appends and updates as one transaction. Because Advantage provides extensive table locking and update flexibility, there are certain factors to keep in mind when introducing Advantage TPS into your applications.
+
+In general, care should be taken to keep the transaction duration as short as possible. This will help improve concurrency between clients updating the same records, as well as help make changes visible to other users sooner. User interface I/O should not be part of a transaction.
+
+[Data Locking and Transaction Processing](master_data_locking_and_transaction_processing.md)
+
+See the following topics in the Advantage Client Engine help (ACE.HLP) (Note that each of the Advantage products and their corresponding Help files are installed separately.):
+
+- Capturing Errors and Error Recovery with the Advantage Client Engine API
+
+- Advantage Client Engine Transaction Processing APIs
+
+- Advantage Client Engine API TPS Examples

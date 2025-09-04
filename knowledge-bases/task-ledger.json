@@ -1,0 +1,77 @@
+{
+  "run_id": "advantage-kb-2025-09-02T19:16:03Z",
+  "created_at": "2025-09-02T19:16:03Z",
+  "status": "ingested",
+  "scope": {
+    "corpus_root": "knowledge-bases/advantage",
+    "output_root": "knowledge-bases/advantage_clean",
+    "ledger_path": "knowledge-bases/task-ledger.json"
+  },
+  "config": {
+    "embedding": {
+      "provider": "openai",
+      "model": "text-embedding-3-small",
+      "dimensions": 1536
+    },
+    "pinecone": {
+      "index_name": "advantage-v1",
+      "region": "us-east-1",
+      "metric": "cosine"
+    },
+    "chunking": {
+      "target_tokens": 700,
+      "overlap_ratio": 0.15,
+      "heading_aware": true,
+      "token_aware": "heuristic"
+    }
+  },
+  "steps": [
+    {"id": "confirm_scope", "title": "Confirm scope and defaults", "status": "completed", "notes": "Clean knowledge-bases/advantage; OpenAI text-embedding-3-small; Pinecone advantage-v1 us-east-1; ledger at knowledge-bases/task-ledger.json"},
+    {"id": "draft_plan", "title": "Draft executable plan and TODO", "status": "completed"},
+    {"id": "create_ledger", "title": "Create task ledger", "status": "completed"},
+    {"id": "corpus_audit", "title": "Audit sample of 200 MD files and write _audit.md", "status": "completed", "artifacts": ["knowledge-bases/advantage/_audit.md"]},
+    {"id": "sanitizer_spec", "title": "Design sanitizer spec and front matter schema", "status": "completed", "artifacts": ["knowledge-bases/advantage/_sanitizer_spec.md"]},
+    {"id": "implement_cleaner", "title": "Implement MD cleaner with link rewriting and front matter", "status": "completed", "artifacts": ["scripts/clean_md_corpus.py"]},
+    {"id": "run_cleaner_spotcheck", "title": "Run cleaner to produce advantage_clean and spot-check 20 pages", "status": "completed", "artifacts": ["knowledge-bases/advantage_clean/_audit.md", "knowledge-bases/advantage_clean/_spotcheck.md"]},
+    {"id": "chunker", "title": "Implement heading-aware, token-aware chunker and write enriched JSONL", "status": "completed", "artifacts": ["knowledge-bases/advantage_clean/enriched.index.jsonl", "knowledge-bases/advantage_clean/enriched.chunks.jsonl"]},
+    {"id": "create_index", "title": "Create Pinecone index advantage-v1 us-east-1", "status": "completed", "notes": "Serverless index ensured/created in us-east-1 (cosine, 1536 dims)"},
+    {"id": "ingestion", "title": "Implement and run ingestion to Pinecone (dense + optional sparse)", "status": "completed", "notes": "Upserted 9437 chunks into index advantage-v1"},
+    {"id": "cli_search", "title": "Implement CLI hybrid search tool with citations", "status": "completed", "artifacts": ["scripts/search_pinecone.py"]},
+    {"id": "cli_synthesis", "title": "Implement answer synthesis CLI with inline citations", "status": "completed", "artifacts": ["scripts/synthesize_answer.py"]},
+    {"id": "mcp_server", "title": "Create MCP server exposing search_kb/get_doc/synthesize_answer", "status": "pending"},
+    {"id": "mcp_config", "title": "Add MCP server entry to mcp.json and verify", "status": "pending"},
+    {"id": "qa", "title": "QA with 10 representative queries and fix issues", "status": "pending"},
+    {"id": "ops_guide", "title": "Write operations guide README_kb.md", "status": "pending"}
+  ],
+  "counters": {
+    "docs_total": 8245,
+    "docs_cleaned": 8245,
+    "chunks_total": 9437,
+    "ingested": 9437,
+    "failed": 0
+  },
+  "artifacts": {
+    "audit_report": "knowledge-bases/advantage/_audit.md",
+    "sanitizer_spec": "knowledge-bases/advantage/_sanitizer_spec.md",
+    "enriched_index": "knowledge-bases/advantage_clean/enriched.index.jsonl",
+    "enriched_chunks": "knowledge-bases/advantage_clean/enriched.chunks.jsonl",
+    "clean_audit": "knowledge-bases/advantage_clean/_audit.md",
+    "spotcheck_report": "knowledge-bases/advantage_clean/_spotcheck.md",
+    "pinecone_index": "advantage-v1"
+  },
+  "events": [
+    {"ts": "2025-09-02T19:36:32Z", "type": "audit_clean_output", "summary": "advantage_clean/_audit.md written"},
+    {"ts": "2025-09-02T19:42:49Z", "type": "spotcheck", "verdict": "PASS", "counts": {"html_links": 0, "feedback_on": 0, "product_header": 0, "empty_cell_row": 0, "empty_sep_row": 0, "bullet_dot": 0}},
+    {"ts": "2025-09-02T20:02:06Z", "type": "ingestion", "index": "advantage-v1", "region": "us-east-1", "ingested": 9437, "elapsed_seconds": 169.08}
+  ],
+  "env": {
+    "OPENAI_API_KEY": "set via .env",
+    "PINECONE_API_KEY": "set via .env",
+    "PINECONE_ENVIRONMENT": "us-east-1"
+  },
+  "notes": [
+    "Initialized ledger for Advantage KB pipeline.",
+    "Clean run completed: docs=8245, chunks=9437. Outputs in knowledge-bases/advantage_clean.",
+    "Pinecone ingestion finished for index advantage-v1 (serverless us-east-1)."
+  ]
+}

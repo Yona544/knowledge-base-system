@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "./advantage-md"],
+      "alwaysAllow": ["list_directory", "read_text_file"],
+      "disabled": false
+    }
+  }
+}

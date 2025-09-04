@@ -1,0 +1,7 @@
+mcp
+pinecone>=5.0.0
+python-dotenv
+scikit-learn
+openai>=1.0.0
+uvicorn>=0.30.0
+

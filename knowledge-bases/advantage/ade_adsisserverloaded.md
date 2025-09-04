@@ -1,0 +1,45 @@
+AdsIsServerLoaded
+
+
+
+
+Advantage Database Server 12  
+
+TAdsTable/TAdsQuery.AdsIsServerLoaded
+
+Advantage TDataSet Descendant
+
+|  |
+| --- |
+|  |
+
+|  |  |  |  |  |
+| --- | --- | --- | --- | --- |
+| TAdsTable/TAdsQuery.AdsIsServerLoaded  Advantage TDataSet Descendant |  |  | Feedback on: Advantage Database Server 12 - TAdsTable/TAdsQuery.AdsIsServerLoaded Advantage TDataSet Descendant ade\_Adsisserverloaded Advantage Web Development > Advantage Delphi OData Client > Delphi OData Components > TODataSet / Dear Support Staff, |  |
+| TAdsTable/TAdsQuery.AdsIsServerLoaded  Advantage TDataSet Descendant |  |  |  |  |
+
+Determines if the Advantage server is loaded.
+
+Syntax
+
+function AdsIsServerLoaded( strServer : String ) : Boolean;
+
+Parameter
+
+|  |  |
+| --- | --- |
+| strServer | String containing drive letter or server name to check. If the application uses a server name as the parameter, it must include the share name as well. For example, use "\\server\share" or "server\vol:". |
+
+Description
+
+AdsIsServerLoaded is used to check if an Advantage server is loaded on the specified machine. If AdsIsServerLoaded returns non-zero, this results in a connection to the server. If AdsIsServerLoaded returns 0, no server is loaded.
+
+Example
+
+bIsLoaded := AdsTable1.AdsIsServerLoaded( x:\data );
+
+{ bIsLoaded equals TRUE if the Advantage Database Server is loaded on that remote server }
+
+See Also
+
+None.

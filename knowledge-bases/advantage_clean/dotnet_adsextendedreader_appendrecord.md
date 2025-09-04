@@ -1,0 +1,39 @@
+---
+title: Dotnet Adsextendedreader Appendrecord
+slug: dotnet_adsextendedreader_appendrecord
+product: Advantage Database Server
+component: Advantage
+version: "12"
+category: Reference
+original_path_html: dotnet_adsextendedreader_appendrecord.htm
+source: Advantage CHM
+tags:
+  - dotnet
+checksum: 3c8278acd6aa097d4d9fffdbcca32094b121d545
+---
+
+# Dotnet Adsextendedreader Appendrecord
+
+AdsExtendedReader.AppendRecord
+
+AdsExtendedReader.AppendRecord
+
+Advantage .NET Data Provider
+
+| AdsExtendedReader.AppendRecord  Advantage .NET Data Provider |  |  |  |  |
+
+Appends an empty record to the end of the table.
+
+public void AppendRecord();
+
+Remarks
+
+AppendRecord appends a blank record to the end of the table, locks the record, and positions the table to the new record. Changes are written when the user moves off of the appended record or calls WriteRecord. Transactions have some affect on appending records; see [Advantage Transaction Processing](master_advantage_transaction_processing_system_overview.md) for more information on appends during transactions.
+
+Note With ADT tables, Advantage implements a record re-use algorithm that recycles records that have been deleted (DeleteRecord). This means that the newly appended record may not actually be at the end of the table. An application should not make any assumptions about the new record number.
+
+See Also
+
+[DeleteRecord](dotnet_adsextendedreader_deleterecord.md)
+
+[RecordNumber](dotnet_adsextendedreader_recordnumber.md)

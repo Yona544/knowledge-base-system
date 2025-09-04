@@ -1,0 +1,57 @@
+Writing Stored Procedures
+
+
+
+
+Advantage Database Server 12  
+
+ 
+
+     Writing Stored Procedures
+
+Advantage Database Server v8.1: A Developers Guide
+
+by Cary Jensen and Loy Anderson
+
+  © 2007 Cary Jensen and Loy Anderson. All rights reserved.
+
+|  |
+| --- |
+|  |
+
+|  |  |  |  |  |
+| --- | --- | --- | --- | --- |
+| Writing Stored Procedures  Advantage Database Server v8.1: A Developers Guide  by Cary Jensen and Loy Anderson    © 2007 Cary Jensen and Loy Anderson. All rights reserved. |  |  | Feedback on: Advantage Database Server 12 -       Writing Stored Procedures Advantage Database Server v8.1: A Developers Guide by Cary Jensen and Loy Anderson     2007 Cary Jensen and Loy Anderson. All rights reserved. devguide\_Writing\_Stored\_Procedures Advantage Developer's Guide > Part I - Advantage and Advantage Data Architect > Chapter 7 - Stored Procedures > Writing Stored Procedures / Dear Support Staff, |  |
+| Writing Stored Procedures  Advantage Database Server v8.1: A Developers Guide  by Cary Jensen and Loy Anderson    © 2007 Cary Jensen and Loy Anderson. All rights reserved. |  |  |  |  |
+
+How you write your stored procedures depends on its type: SQL stored procedure or AEP. With SQL stored procedures, you can use any tool that can write SQL, such as the SQL Utility of the Advantage Data Architect or even something as simple as Windows Notepad.
+
+You write AEPs using any language that supports the creation of the types of executable files supported by Advantage. To simplify the task of creating AEPs, Advantage provides templates for the most popular development environments. One of these templates is used for Delphi, Kylix, and C++Builder. There is another template for Visual Basic. Additional templates are also available for VB.NET and Microsoft C#.
+
+You do not need to begin with one of these templates, but doing so is highly recommended. These templates are well designed and can significantly reduce the amount of time it takes for you to create AEPs. If you decide instead to write your own AEPs from scratch, you should examine the AEP templates both for the signatures of the included functions, as well as for the helpful comments that appear throughout the code.
+
+The following sections in this chapter show you how to create stored procedures using SQL, Delphi, C#, and VB.NET. The descriptions in these sections assume that you are already familiar with using the language being described. Consequently, only high-level steps are provided, such as "create a new project from the AEP template."
+
+The primary focus of these sections is the code that produces the stored procedure. If you are new to one or more of these development environments, and want to follow along with the examples, you may want to refer to the development environment's documentation, or get a good introductory book on the tool. (If you are unfamiliar with SQL, you can refer to the SQL chapters in Part II of this book or to the Advantage help.)
+
+The stored procedure that is created in the following sections defines a single stored procedure function. (Remember, AEPs can include one or more functions, but will contain only one in these examples,) This function is named Get10Percent (SQLGet10Percent for the SQL stored procedure), and it will return every tenth invoice number for a given customer. If a customer has fewer than ten invoices overall, this stored procedure returns an error.
+
+The procedure takes a single integer input parameter that will identify the customer whose records need to be processed. This stored procedure has a single output parameter, which holds the invoice numbers that are returned. In this case, zero or more records are returned by the function.
+
+From within the function, the input parameter is read from the \_ \_input table and is used to select ten percent of that customer's records. If a customer has fewer than ten records (ten percent is less than one) a message is written to the \_ \_error table.
+
+The final step is optional in your stored procedures. If your stored procedure affected one or more records, the number of affected records can be assigned to the third parameter of the AEP stored procedure function, a parameter provided for just this purpose. (There is no comparable parameter for SQL stored procedures.)
+
+But before we get to the examples, there are a couple of warnings specific to AEPs that we need to consider. These are related to the multithreaded nature of AEP execution, as well as exception handling in your AEPs.
+
+Advantage is a multithreaded server. When a client invokes an individual stored procedure in an AEP container, that invocation is performed by one of the server's threads.
+
+Most AEPs can be invoked simultaneously from different threads on the Advantage server. (Only COM servers created in Visual Basic 6 cannot be invoked concurrently. More about that is said in the section "Creating AEPs Using Visual Basic 6.") As a result, it is extremely important that you use good multithreading programming techniques.
+
+In short, you should not refer to global variables or other resources that are not thread-safe from within your AEPs without using a synchronization object such as a critical section. The state maintenance object, however, is thread-safe (at least as it is employed in the code generated by AEP templates).
+
+   
+NOTE: Two or more stored procedure calls from a given client's connection will not necessarily be made using the same thread. In other words, do not use the thread ID of the thread from which an AEP is invoked to identify a client. Only use the connection ID parameter passed to the stored procedure to identify which client connection the stored procedure is being invoked from. Also, for the same reason, thread local storage cannot be used for state maintenance. If you need to maintain state, add that feature to your state maintenance object that is created in the startup function.  
+ 
+
+Another concern for stored procedure developers is exceptions. It is considered bad form to permit an unhandled exception to escape your stored procedure. Consequently, your code should always be placed inside an exception trapping block. If an exception occurs, your code should insert an error into the \_ \_error table.

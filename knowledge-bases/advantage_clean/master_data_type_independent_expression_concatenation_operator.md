@@ -1,0 +1,29 @@
+---
+title: Master Data Type Independent Expression Concatenation Operator
+slug: master_data_type_independent_expression_concatenation_operator
+product: Advantage Database Server
+component: Advantage
+version: "12"
+category: Reference
+original_path_html: master_data_type_independent_expression_concatenation_operator.htm
+source: Advantage CHM
+tags:
+  - master
+checksum: fc05fde07efd799a4cd1eb0b52b63e5eff806cec
+---
+
+# Master Data Type Independent Expression Concatenation Operator
+
+Data Type Independent Expression Concatenation Operator
+
+Data Type Independent Expression Concatenation Operator
+
+Advantage Concepts
+
+| Data Type Independent Expression Concatenation Operator  Advantage Concepts |  |  |  |  |
+
+Advantage proprietary files support a concatenation operator ; (a semi-colon) that can be used in index and filter expressions. This operator allows any data to be concatenated regardless of data type. For example, if two fields exist that are named DATE\_FIELD and CHAR\_FIELD, an index can be built with the key) expression "DATE\_FIELD; CHAR\_FIELD". The equivalent index expression for a DBF table would be "DTOS( DATE\_FIELD ) + CHAR\_FIELD", which concatenates the characters that are the result of the DTOS function call, and the data stored in the character field.
+
+If you prefer to concatenate fields of different data type in index and filter expressions without having to use functions to convert the fields to the same data type, you will want to use the [Advantage Proprietary Format](master_advantage_proprietary_format.md) and the data type independent concatenation operator.
+
+It is also possible to use the binary concatenation operator when using DBF tables opened with the Visual FoxPro (VFP) table type. However, this will produce an index that is not compatible with Visual FoxPro. One benefit to using the binary concatenation operator is that it produces keys that are more useful for optimization when the fields involved can hold [NULL values](master_support_for_null_values.md). For example, if a key expression is "lastname+firstname", and one or both fields can hold NULL values, that index cannot be used for certain optimizations (e.g., Advantage Optimized Filters) because the result of the key is NULL if either value is NULL. Using the key expression "lastname;firstname" produces an index that can be used for more optimizations.
